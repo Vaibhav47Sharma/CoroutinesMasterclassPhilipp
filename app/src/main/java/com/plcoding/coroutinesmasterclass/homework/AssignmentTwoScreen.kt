@@ -54,7 +54,7 @@ fun AssignmentTwoScreen() {
                 BitmapFactory.decodeStream(it)
             }
             isLoading = true
-            val dominantColor = PhotoProcessor.findDominantColor(bitmap)
+            val dominantColor =  PhotoProcessor.findDominantColor(bitmap)
             isLoading = false
             backgroundColor = Color(dominantColor)
         }

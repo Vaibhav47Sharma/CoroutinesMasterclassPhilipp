@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/gradle.xml
+/migrations.xml
+/misc.xml
+/compiler.xml
+/vcs.xml
+/.name
+/1.json
+/kotlinc.xml

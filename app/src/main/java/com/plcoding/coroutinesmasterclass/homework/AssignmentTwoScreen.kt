@@ -30,7 +30,9 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.plcoding.coroutinesmasterclass.util.PhotoProcessor
 import com.plcoding.coroutinesmasterclass.util.RotatingBoxScreen
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun AssignmentTwoScreen() {
@@ -49,14 +51,16 @@ fun AssignmentTwoScreen() {
     }
 
     LaunchedEffect(photoUri) {
+        withContext(Dispatchers.IO) {
         if (photoUri != null) {
             val bitmap = context.contentResolver.openInputStream(photoUri!!).use {
                 BitmapFactory.decodeStream(it)
             }
             isLoading = true
-            val dominantColor =  PhotoProcessor.findDominantColor(bitmap)
+            val dominantColor = PhotoProcessor.findDominantColor(bitmap)
             isLoading = false
             backgroundColor = Color(dominantColor)
+        }
         }
     }
 
@@ -76,10 +80,10 @@ fun AssignmentTwoScreen() {
                 )
             }
         }) {
-            Text(text = "Pick Image")
+            Text(text = "Pick Image",)
         }
         if (isLoading) {
-            Text(text = "Finding dominant color...")
+            Text(text = "Finding dominant color...", color = Color.Green)
         }
 
         if (photoUri != null) {

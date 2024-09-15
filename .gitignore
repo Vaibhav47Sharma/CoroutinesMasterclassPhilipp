@@ -15,3 +15,10 @@
 local.properties
 /.idea
 /.idea/.name
+/.idea/compiler.xml
+/.idea/kotlinc.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/migrations.xml
+/.idea/vcs.xml
+/.idea/deploymentTargetSelector.xml

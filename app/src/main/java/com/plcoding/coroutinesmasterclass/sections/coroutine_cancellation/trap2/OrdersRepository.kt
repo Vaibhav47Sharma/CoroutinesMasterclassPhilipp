@@ -1,5 +1,6 @@
 package com.plcoding.coroutinesmasterclass.sections.coroutine_cancellation.trap2
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.NonCancellable
@@ -14,7 +15,7 @@ class OrdersApi {
         return try {
             delay(2000)
             val orderNumber = "123456"
-            println("Order placed: $orderNumber")
+            Log.i("vaibsharma:", "Order placed: $orderNumber")
             orderNumber
         } catch (e: Exception) {
             coroutineContext.ensureActive()
@@ -26,7 +27,7 @@ class OrdersApi {
 class OrdersDao {
     suspend fun saveTrackingNumber(trackingNumber: String) {
         delay(2000)
-        println("Tracking number saved: $trackingNumber")
+        Log.i("vaibsharma:", "Tracking number saved: $trackingNumber")
     }
 }
 
@@ -36,10 +37,10 @@ class OrdersRepository(
     private val applicationScope: CoroutineScope
 ) {
     suspend fun placeOrder() {
-        println("Placing order...")
+        Log.i("vaibsharma:", "Placing order...")
         val trackingNumber = api.postOrder()
         if (trackingNumber != null) {
-            println("Order placed successfully, saving tracking number: $trackingNumber")
+            Log.i("vaibsharma:", "Order placed successfully, saving tracking number: $trackingNumber")
             applicationScope.launch {
                 dao.saveTrackingNumber(trackingNumber)
             }.join()

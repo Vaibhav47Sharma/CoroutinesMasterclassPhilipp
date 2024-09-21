@@ -16,9 +16,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoroutinesMasterclassTheme {
                 val viewModel: MoneyTransferViewModel = viewModel()
-
+                viewModel.setSApplicationScope((application as MyApplication).applicationScope)
                 MoneyTransferScreen(
-                    state = viewModel.state,
+                    state = viewModel.state.value,
                     onAction = viewModel::onAction
                 )
             }

@@ -9,41 +9,42 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import java.io.File
 import kotlin.coroutines.coroutineContext
+import android.util.Log
 
 class FileManager(private val context: Context) {
     private var tempFile: File? = null
 
     suspend fun writeRecordsToFile() {
-        println("Writing records to file...")
+        Log.i("vaibsharma:", "Writing records to file...")
         withContext(Dispatchers.IO) {
             tempFile = File.createTempFile("db_records_", ".txt", context.cacheDir)
             try {
                 repeat(5) {
-                    println("Writing line $it & isActive: ${coroutineContext.isActive}")
+                    Log.i("vaibsharma:", "Writing line $it & isActive: ${coroutineContext.isActive}")
                     tempFile?.appendText("Database record $it\n")
                     delay(1000)
                 }
             } catch (e: Exception) {
                 ensureActive()
-                println("Error writing records to file: $e")
+                Log.i("vaibsharma:", "Error writing records to file: $e")
             } finally {
-                println("Cleaning up temp file...")
+                Log.i("vaibsharma:", "Cleaning up temp file...")
                 withContext(NonCancellable) {
                     cleanupTempFile()
                 }
-                println("Cleaned up temp file!")
+                Log.i("vaibsharma:", "Cleaned up temp file!")
             }
         }
     }
 
     private suspend fun cleanupTempFile() {
-        println("Cleanup function, is active: ${coroutineContext.isActive}")
+        Log.i("vaibsharma:", "Cleanup function, is active: ${coroutineContext.isActive}")
         withContext(Dispatchers.IO) {
             delay(2000)
             tempFile?.let { file ->
                 if(file.exists()) {
                     file.delete()
-                    println("Deleted file")
+                    Log.i("vaibsharma:", "Deleted file")
                 }
             }
         }

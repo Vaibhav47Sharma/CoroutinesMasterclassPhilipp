@@ -1,11 +1,9 @@
 package com.plcoding.coroutinesmasterclass.sections.coroutine_cancellation.homework.assignmenttwo
 
 import android.util.Log
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -93,6 +91,10 @@ class MoneyTransferViewModel : ViewModel() {
           }
         } catch (e: Exception) {
           Log.i("xyz: ", "Error processing transfer: ${e.message}")
+          if (e is CancellationException) {
+            throw e
+          }
+          // Restore the values from before
           state.value =
             state.value.copy(checkingBalance = checkingBalance, savingsBalance = savingsBalance)
         } finally {
